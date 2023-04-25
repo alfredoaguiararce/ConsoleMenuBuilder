@@ -9,6 +9,7 @@ namespace MenuBuilder.Builders.MenuBuilder
         private bool _shouldClearAfterSelection = false;
         private Action _afterClearAction = null;
         private readonly IUserInputReader _inputReader;
+        private string _prompt = "Please select an option:";
         private int _delaytime = 500; // 500ms
 
         public ConsoleMenuBuilder(IUserInputReader inputReader)
@@ -40,12 +41,28 @@ namespace MenuBuilder.Builders.MenuBuilder
             return this;
         }
 
+        public ConsoleMenuBuilder SetPrompt(string PromptMenu)
+        {
+            this._prompt = PromptMenu;
+            return this;
+        }
+
+        public ConsoleMenuBuilder CreateSimpleYesNoMenu(Action YesAction, Action NoAction)
+        {
+            
+            _options.Add(new MenuOption("y", null, YesAction));
+            _options.Add(new MenuOption("n", null, NoAction));
+
+            return this;
+        }
+
         public void Build()
         {
+            bool executed = false;
             do
             {
                 Console.Clear();
-                Console.WriteLine("Please select an option:");
+                Console.WriteLine(_prompt);
 
                 foreach (var option in _options)
                 {
@@ -53,7 +70,7 @@ namespace MenuBuilder.Builders.MenuBuilder
                 }
 
                 Console.WriteLine();
-                string selection = _inputReader.ReadLine().Trim().ToLower();
+                string? selection = _inputReader.ReadLine()?.Trim().ToLower();
 
                 foreach (var option in _options)
                 {
@@ -66,6 +83,8 @@ namespace MenuBuilder.Builders.MenuBuilder
                             Console.Clear();
                             _afterClearAction?.Invoke();
                         }
+
+                        executed = true;
                         break;
                     }
                 }
@@ -78,7 +97,7 @@ namespace MenuBuilder.Builders.MenuBuilder
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
 
-            } while (true);
+            } while (!executed);
         }
     }
 

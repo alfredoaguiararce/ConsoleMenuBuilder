@@ -5,38 +5,50 @@ using MenuBuilder.Interfaces;
 using MenuBuilder.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-internal class Program
-{
-    private static void Main(string[] args)
-    {
-        // Crear un proveedor de servicios
-        var serviceProvider = new ServiceCollection()
-            .AddScoped<IUserInputReader, ConsoleUserInputReader>()
-            .BuildServiceProvider();
+// Crear un proveedor de servicios
+var serviceProvider = new ServiceCollection()
+    .AddScoped<IUserInputReader, ConsoleUserInputReader>()
+    .BuildServiceProvider();
 
-        // Obtener una instancia del servicio
-        IUserInputReader miServicio = serviceProvider.GetService<IUserInputReader>();
-        Console.WriteLine("Hello, World!");
+// Obtener una instancia del servicio
+IUserInputReader? miServicio = serviceProvider.GetService<IUserInputReader>();
 
-        var menuBuilder = new ConsoleMenuReadBuilder<int>();
-        menuBuilder.AddOption("1", () => 1)
-                   .AddOption("2", () => 2)
-                   .AddOption("3", () => 3)
-                   .AsLoop()
-                   .SetPrompt("Please enter a number: ");
+Console.WriteLine("Hello, World!");
+
+var firstvaluepicker = new ConsoleMenuReadBuilder<int>()
+           .AddOption("1", () => 1)
+           .AddOption("2", () => 2)
+           .AddOption("3", () => 3)
+           .AsLoop()
+           .SetPrompt("Please enter a number: ");
+
+var secondvaluepicker = new ConsoleMenuReadBuilder<int>()
+           .AddOption("1", () => 1)
+           .AddOption("2", () => 2)
+           .AddOption("3", () => 3)
+           .AsLoop()
+           .SetPrompt("Please enter a number: ");
 
 
-        int selectedOption = menuBuilder.ReadInput();
-        Console.WriteLine("You selected option: " + selectedOption);
+int a = firstvaluepicker.ReadInput();
+int b = secondvaluepicker.ReadInput();
 
-        Thread.Sleep(1000);
+Thread.Sleep(1000);
 
-        new ConsoleMenuBuilder(miServicio)
-            .AddOption("1","Ejecuta suma", () => Console.WriteLine("Option 1"))
-            .AddOption("2", "Ejecuta resta", () => Console.WriteLine("Option 2"))
-            .AddOption("3", "Ejecuta multiplicacion",() => Console.WriteLine("Option 3"))
-            .AsLoop()
-            .ClearAfterSelection(() => Console.WriteLine("Press any key to continue..."))
-            .Build();
-    }
-}
+new ConsoleMenuBuilder(miServicio)
+    .AddOption("1", "Ejecuta suma", () => Console.WriteLine($"{a} + {b} = {a+b}"))
+    .AddOption("2", "Ejecuta resta", () => Console.WriteLine($"{a} - {b} = {a - b}"))
+    .AddOption("3", "Ejecuta multiplicacion", () => Console.WriteLine($"{a} x {b} = {a * b}"))
+    .AsLoop()
+    .ClearAfterSelection(() => Console.WriteLine("Press any key to continue..."))
+    .Build();
+
+
+Thread.Sleep(1000);
+
+new ConsoleMenuBuilder(miServicio)
+    .SetPrompt("Select (y/n)")
+    .CreateSimpleYesNoMenu(() => Console.WriteLine("Option yes"),
+                           () => Console.WriteLine("Option no")
+                            )
+    .Build();
