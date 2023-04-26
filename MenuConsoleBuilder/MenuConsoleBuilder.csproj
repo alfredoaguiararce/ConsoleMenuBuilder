@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>MenuConsoleBuilder</Title>
+    <Company>Alfredo Aguiar Arce</Company>
+    <Description>MenuConsoleBuilder is a .NET 6 library for building console-based menus with customizable options and actions. It provides a simple API for creating console menus with options that the user can select by typing a key. The library includes features such as prompting the user for input, clearing the console after an option has been selected, and displaying all the available options.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/alfredoaguiararce/ConsoleMenuBuilder</RepositoryUrl>
+    <PackageTags>console; menu; builder;</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Release Notes - Version 1.0.0
+Features
+Added ConsoleMenuBuilder and ConsoleMenuReadBuilder classes for building console menus.
+ConsoleMenuBuilder allows for creating a console menu with options and executing corresponding actions.
+ConsoleMenuReadBuilder allows for reading user input from the console with a menu of options.
+Both builders support looping and clearing the console screen.
+Examples
+Added four example programs demonstrating how to use ConsoleMenuBuilder and ConsoleMenuReadBuilder.
+Each example includes a detailed description of the program and its intended use case.
+Documentation
+Created README.md file with instructions on how to use the library and its available methods.
+Created a table in README.md describing each available method and its options.
+Miscellaneous
+Created NuGet package and published to NuGet.org.
+Added license information to the repository.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

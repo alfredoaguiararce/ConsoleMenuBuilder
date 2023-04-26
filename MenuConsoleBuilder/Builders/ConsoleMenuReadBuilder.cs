@@ -12,7 +12,8 @@
         private string prompt = "";
 
         // Function that clears the console after an option has been selected
-        private Func<string> clearAction = null;
+        private Action? clearAction = null;
+        private bool _writealloptions;
 
         // Method for reading user input and returning the selected option
         public T ReadInput()
@@ -20,11 +21,8 @@
             while (true)
             {
                 Console.Write(prompt);
-                foreach (var option in options)
-                {
-                    Console.Write(option.Key + " ");
-                }
-                Console.Write(": ");
+                PrintOptionsMenu(_writealloptions);
+
                 var input = Console.ReadLine();
                 foreach (var option in options)
                 {
@@ -38,7 +36,9 @@
                         return option.Action();
                     }
                 }
+
                 Console.WriteLine("Invalid input. Please try again.");
+
                 if (!loop)
                 {
                     return default(T);
@@ -68,39 +68,27 @@
         }
 
         // Method for setting the clear action
-        public ConsoleMenuReadBuilder<T> ClearAfterSelection(Func<string> action)
+        public ConsoleMenuReadBuilder<T> ClearAfterSelection(Action? action)
         {
             this.clearAction = action;
             return this;
         }
 
-        public ConsoleMenuReadBuilder<T> AddIntegerOption(string key, Func<int, T> action)
+        public ConsoleMenuReadBuilder<T> ShowAllOptions(bool isShowMwnu)
         {
-            options.Add(new MenuTypeOption<T>(key, () =>
-            {
-                while (true)
-                {
-                    Console.Write(prompt);
-                    foreach (var option in options)
-                    {
-                        Console.Write(option.Key + " ");
-                    }
-                    Console.Write(": ");
-                    var input = Console.ReadLine();
-
-                    if (int.TryParse(input, out int intValue))
-                    {
-                        return action(intValue);
-                    }
-
-                    Console.WriteLine("Invalid input. Please enter an integer value.");
-                    if (!loop)
-                    {
-                        return default(T);
-                    }
-                }
-            }));
+            _writealloptions = isShowMwnu;
             return this;
+        }
+
+        private void PrintOptionsMenu(bool isMenuOptionsVisible)
+        {
+            if (isMenuOptionsVisible)
+            {
+                foreach (var option in options)
+                {
+                    Console.WriteLine($"[{option.Key}]");
+                }
+            }
         }
 
     }

@@ -1,6 +1,4 @@
-﻿using MenuBuilder.Interfaces;
-using Moq;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace MenuBuilder.Builders.MenuBuilder.Tests
 {
@@ -11,9 +9,7 @@ namespace MenuBuilder.Builders.MenuBuilder.Tests
         public void AddOption_AddsOptionToList()
         {
             // Arrange
-            var inputReader = Mock.Of<IUserInputReader>();
-            // Arrange
-            var builder = new ConsoleMenuBuilder(inputReader);
+            var builder = new ConsoleMenuBuilder();
             var key = "1";
             var info = "Option 1";
             var action = new Action(() => Console.WriteLine("Option 1"));
@@ -34,9 +30,7 @@ namespace MenuBuilder.Builders.MenuBuilder.Tests
         public void AsLoop_SetsLoopToTrue()
         {
             // Arrange
-            var inputReader = Mock.Of<IUserInputReader>();
-            // Arrange
-            var builder = new ConsoleMenuBuilder(inputReader);
+            var builder = new ConsoleMenuBuilder();
             // Act
             builder.AsLoop();
 
@@ -53,11 +47,9 @@ namespace MenuBuilder.Builders.MenuBuilder.Tests
         public void ClearAfterSelection_SetsShouldClearAfterSelectionToTrue()
         {
             // Arrange
-            var inputReader = Mock.Of<IUserInputReader>();
-            // Arrange
-            var builder = new ConsoleMenuBuilder(inputReader);
+            var builder = new ConsoleMenuBuilder();
             // Act
-            builder.ClearAfterSelection();
+            builder.ClearAfterSelectionEnds();
 
             // Assert
             var optionsField = typeof(ConsoleMenuBuilder).GetField("_shouldClearAfterSelection", BindingFlags.NonPublic | BindingFlags.Instance);
