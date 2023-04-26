@@ -28,6 +28,7 @@ Created a table in README.md describing each available method and its options.
 Miscellaneous
 Created NuGet package and published to NuGet.org.
 Added license information to the repository.</PackageReleaseNotes>
+    <Authors>Alfredo Aguiar Arce</Authors>
   </PropertyGroup>
 
   <ItemGroup>
